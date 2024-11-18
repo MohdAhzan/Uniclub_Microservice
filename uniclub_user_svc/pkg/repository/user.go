@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	interfaces "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/repository/interface"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/domain"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+	interfaces "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/repository/interface"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/domain"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 
 	"gorm.io/gorm"
 )

@@ -1,8 +1,6 @@
 package interfaces
 
-import (
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
-)
+import "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 
 type UserServiceHelper interface {
 	PasswordHashing(string) (string, error)

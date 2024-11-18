@@ -8,8 +8,8 @@ import (
 	"net/smtp"
 	"time"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 )

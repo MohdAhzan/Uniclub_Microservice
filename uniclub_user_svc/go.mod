@@ -1,4 +1,4 @@
-module github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project
+module github.com/MohdAhzan/Uniclub_Microservice/USER_SVC
 
 go 1.23.3
 

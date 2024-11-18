@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/di"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/di"
 	"github.com/joho/godotenv"
 )
 

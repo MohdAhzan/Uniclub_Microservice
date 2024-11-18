@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	helper_interface "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/helper/interface"
-	interfaces "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/repository/interface"
-	domain "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/domain"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+	helper_interface "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/helper/interface"
+	interfaces "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/repository/interface"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/domain"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 
 	"github.com/jinzhu/copier"
 	"golang.org/x/crypto/bcrypt"

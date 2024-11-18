@@ -3,11 +3,11 @@ package usecase
 import (
 	"errors"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	helper_interface "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/helper/interface"
-	interfaces "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/repository/interface"
-	domain "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/domain"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	helper_interface "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/helper/interface"
+	interfaces "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/repository/interface"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/domain"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 )
 
 type userUseCase struct {

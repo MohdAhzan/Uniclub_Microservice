@@ -3,13 +3,14 @@ package di
 import (
 	"fmt"
 
-	server "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/api"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/api/services"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/db"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/helper"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/repository"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/usecase"
+	server "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/api"
+
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/api/services"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/db"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/helper"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/repository"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/usecase"
 )
 
 func InitializeAPI(cfg config.Config) (*server.ServerGRPC, error) {

@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/pb"
-	interfaces "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/usecase/interface"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/pb"
+	interfaces "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/usecase/interface"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 )
 
 type UserServer struct {

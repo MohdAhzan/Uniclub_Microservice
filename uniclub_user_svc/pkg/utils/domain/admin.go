@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/models"
+import "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/models"
 
 type Admin struct {
 	ID       uint   `json:"id" gorm:"unique;not null"`

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/pb"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/pb"
 	"google.golang.org/grpc"
 )
 

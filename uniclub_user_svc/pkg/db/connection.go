@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/config"
-	"github.com/MohdAhzan/Uniclub_ecommerce_Microservice_project/pkg/utils/domain"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
+	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/utils/domain"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/postgres"
