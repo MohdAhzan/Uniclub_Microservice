@@ -1,0 +1,208 @@
+syntax="proto3";
+
+package user;
+
+option go_package = "./pkg/pb/usersvc";
+
+
+service UserService{
+  rpc UserSignup (UserSignupRequest)returns(UserSignupResponse){}
+  rpc UserLoginHandler (UserLoginRequest)returns(UserLoginResponse){}
+  rpc GetUserDetails(GetUserDetailsRequest)returns(GetUserDetailsResponse){}
+  rpc AdminLogin (AdminLoginRequest)returns(AdminLoginResponse){}
+  rpc EditUserDetails(EditUserDetailsRequest)returns(EditUserDetailsResponse){}
+  rpc GetUsers(GetUsersRequest)returns(GetUsersResponse){}
+  rpc BlockUser(BlockRequest)returns(BlockResponse){}
+  rpc UnBlockUser(UnBlockRequest)returns(UnBlockResponse){}
+  rpc ChangeAdminPassword(ChangeAdminPasswordRequest)returns(ChangeAdminPasswordResponse){}
+  rpc GetWallet(GetWalletReq)returns(GetWalletRes){}
+  rpc AddAddress (AddAddressReq) returns (AddAddressRes){}
+  rpc EditAddress (EditAddressReq) returns (EditAddressRes){}
+  rpc GetAddress (GetAddressReq) returns (GetAddressRes){}
+  rpc DeleteAddress (DeleteAddressReq) returns (DeleteAddressRes){}
+
+  }
+message DeleteAddressReq{
+  int64 addressId =1;
+  int64 userId =2;
+}
+message DeleteAddressRes{}
+
+message AddAddressReq{
+  int64  	UserID      = 1;
+  Address details      =2;
+}
+message AddAddressRes{}
+
+message EditAddressReq{
+  int64  ID  = 1;
+  int64  userid  = 2;
+  Address editAddressDetails  =3;
+}
+message EditAddressRes{}
+
+message GetAddressReq{
+  int64      	UserID     = 1;
+}
+message GetAddressRes{
+  repeated Address details  =1;
+}
+
+message Address{
+	
+int64  UserID    = 1;         
+string  Name   = 2;
+string  Address  = 3;
+string  LandMark = 4;
+string  City     = 5;
+string  Pincode  = 6;
+string  State    = 7;
+string  Phone    = 8;   
+bool    Default = 9;
+}
+
+message GetWalletReq{
+  int64      	ID     = 1;
+}
+message GetWalletRes{
+ int64     UserID    = 1;             
+ string  Username    = 2;               
+ double TotalAmount  = 3;                     
+ }
+
+message SignupModel{
+  string 	name            = 1;
+  string	email           = 2;
+  string 	phone           = 3;
+  string 	password        = 4; 
+  string 	confirmPassword = 5;
+} 
+
+message AdminLoginRequest{
+  string	email          = 1;
+  string 	password       = 2; 
+} 
+
+message AdminDetailsResponse{
+  int64      	ID     = 1;
+  string   	Name   = 2; 
+  string  	Email  = 3; 
+}
+
+message AdminLoginResponse{
+  AdminDetailsResponse adminResponseData = 1;
+  int64 httpstatus                       = 2;
+  string AccessToken                     = 3;
+  string Message                         = 4;
+} 
+
+message UserSignupRequest{
+  SignupModel userModel =1;
+  string  referallCode  =2;
+}
+
+
+message UserSignupResponseModel{
+  int64 UserID      = 1; 
+  string Name       = 2; 
+  string 	Email     = 3; 
+  string Phone      = 4; 
+  string ReferralID = 5; 
+}
+
+
+message UserSignupResponse{
+  UserSignupResponseModel  responseData = 1;
+  int64 Httpstatus                      = 2;
+  string AccessToken                    = 3;
+  string RefreshToken                   = 4;
+  string Message                         = 5;
+}
+
+message UserLoginRequest {
+  string	email         =  1;
+  string 	password      =  2; 
+
+}
+
+message UserLoginResponse {
+  int64	Id               = 1; 
+  string Name            = 2; 
+  string 	Email          = 3; 
+  string Phone           = 4; 
+  string ReferralID      = 5; 
+  int64 Httpstatus      = 6;
+  string AccessToken     = 7;
+  string RefreshToken    = 8;
+  string Message                        = 9;
+}
+
+message GetUserDetailsRequest {
+  int64 userId = 1; 
+}
+
+message GetUserDetailsModel {
+  int64	Id         =  1; 
+  string Name      =  2; 
+  string 	Email    =  3; 
+  string Phone     =  4; 
+  string ReferralID  =  5;
+}
+
+message GetUserDetailsResponse {
+  GetUserDetailsModel resData           = 1;
+  int64 Httpstatus                      = 2;
+  string Message                        = 3;
+}
+
+message EditUserDetailsModel {
+  string  Name      = 1;          
+  string  Email     = 2;           
+  string  Phone     = 3;           
+  string  Password  = 4;             
+}
+
+message EditUserDetailsRequest{
+  EditUserDetailsModel  details  = 1;
+  int64   userId                   = 2;
+}
+
+message EditUserDetailsResponse{}
+
+message BlockRequest {
+    int64 id = 1;
+}
+message BlockResponse {}
+
+message UnBlockRequest {
+    int64 id = 1;
+}
+message UnBlockResponse {}
+
+
+message GetUsersRequest{}
+
+message UserDetailsAtModel{
+    int64     Id           = 1;
+    string    Name         = 2;
+    string    Email        = 3;
+    string    Phone        = 4;
+    bool      Blocked      = 5;
+}
+
+message GetUsersResponse{
+
+ repeated  UserDetailsAtModel details =1;
+
+}
+
+message ChangeAdminPasswordResponse {}
+message ChangeAdminPassword {
+  string  CurrentPassword =1;
+  string  NewPassword     =2; 
+  string  ConfirmPassword =3;
+}
+message ChangeAdminPasswordRequest {
+  ChangeAdminPassword details =1;
+  int64 id = 2;
+}
