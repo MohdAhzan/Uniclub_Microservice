@@ -54,19 +54,29 @@ if err := DB.AutoMigrate(&domain.Users{}); err != nil {
 if err := DB.AutoMigrate(&domain.Admin{}); err != nil {
 		return DB, err
 	}
+if err := DB.AutoMigrate(&domain.Wallet{}); err != nil {
+		return DB, err
+	}
+if err := DB.AutoMigrate(&domain.Address{}); err != nil {
+		return DB, err
+	}
+  err=CheckAndCreateAdmin(cfg,DB)
+  if err!=nil{
+    return DB,err
+  }
 
  return DB,nil
   
 }
 
-func CheckAndCreateAdmin(cfg config.Config, db *gorm.DB) {
+func CheckAndCreateAdmin(cfg config.Config, db *gorm.DB) error{
 	var count int64
 	db.Model(&domain.Admin{}).Count(&count)
 	if count == 0 {
 		password := cfg.ADMINPASSWORD
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		if err != nil {
-			return
+			return err
 		}
 		admin := domain.Admin{
 			ID:       1,
@@ -77,6 +87,7 @@ func CheckAndCreateAdmin(cfg config.Config, db *gorm.DB) {
 
 		db.Create(&admin)
 	}
-
+  
+  return nil
 }
 

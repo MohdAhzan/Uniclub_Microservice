@@ -6,7 +6,7 @@ import (
 )
 
 type AdminUseCase interface {
-	LoginHandler(adminDetails models.AdminLogin) (domain.TokenAdmin, error)
+  LoginHandler(adminDetails models.AdminLogin) (domain.TokenAdmin, error)
 	GetUsers() ([]models.UserDetailsAtAdmin, error)
 	BlockUser(id int) error
 	UnBlockUser(id int) error

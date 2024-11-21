@@ -173,6 +173,7 @@ func (u *userDatabase) GetHashedPassword(id int) (string, error) {
 	if err != nil {
 		return "", errors.New("failed to get hashedPass")
 	}
+
 	return hashedPassword, nil
 }
 

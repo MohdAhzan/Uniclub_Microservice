@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/config"
 	helper_interface "github.com/MohdAhzan/Uniclub_Microservice/USER_SVC/pkg/helper/interface"
@@ -188,8 +189,12 @@ func (u *userUseCase) EditUserDetails(id int, details models.EditUserDetails) er
 	if err != nil {
 		return errors.New("error fetching EncryptedPassword")
 	}
+
+   fmt.Print("checking hashed password",details.Password,hashedPassword)
+
 	Err := u.helper.CompareHashAndPassword(hashedPassword, details.Password)
 	if Err != nil {
+   fmt.Print("checking hashed password",details.Password  )
 		return errors.New("incorrect PassWord !! Try Again")
 
 	}
