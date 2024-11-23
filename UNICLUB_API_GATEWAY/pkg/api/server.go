@@ -30,7 +30,7 @@ func NewServerHTTP(usersvcHandler *handler.UserServiceHandler) *ServerHTTP {
 
     router.PUT("/change_password", usersvcHandler.ChangeAdminPassword)
 
-    userManagement := router.Group("/users")
+    userManagement := router.Group("admin/users")
     {
       userManagement.GET("", usersvcHandler.GetUsers)
       userManagement.PUT("/block", usersvcHandler.BlockUser)
