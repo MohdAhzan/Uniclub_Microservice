@@ -3,7 +3,6 @@ package usecase
 import (
 	"errors"
 	"fmt"
-	"mime/multipart"
 
 	helper_interfaces "github.com/MohdAhzan/Uniclub_Microservice/INVENTORY_SVC/pkg/helper"
 	interfaces "github.com/MohdAhzan/Uniclub_Microservice/INVENTORY_SVC/pkg/repository/interface"
@@ -26,7 +25,7 @@ func NewInventoryUseCase(repo interfaces.InventoryRepository, h helper_interface
 
 }
 
-func (Inv *InventoryUseCase) AddInventory(inventory models.AddInventory, file *multipart.FileHeader) (models.InventoryResponse, error) {
+func (Inv *InventoryUseCase) AddInventory(inventory models.AddInventory ) (models.InventoryResponse, error) {
 
   exists, err := Inv.repository.CheckCategoryID(inventory.CategoryID)
   if err != nil {
@@ -46,14 +45,8 @@ func (Inv *InventoryUseCase) AddInventory(inventory models.AddInventory, file *m
     return models.InventoryResponse{}, errors.New(errMsg)
   }
 
-  var URL string
 
-  URL, err = Inv.InventoryServiceHelper.AddImageToAwsS3(file)
-  if err != nil {
-    return models.InventoryResponse{}, err
-  }
-
-  inventoryResponse, Err := Inv.repository.AddInventory(inventory, URL)
+  inventoryResponse, Err := Inv.repository.AddInventory(inventory)
 
   if Err != nil {
     return models.InventoryResponse{}, Err

@@ -21,13 +21,13 @@ func NewInventoryRepository(DB *gorm.DB ) interfaces.InventoryRepository {
 	}
 }
 
-func (inv *InventoryRepository) AddInventory(Inventory models.AddInventory, URL string) (models.InventoryResponse, error) {
+func (inv *InventoryRepository) AddInventory(Inventory models.AddInventory) (models.InventoryResponse, error) {
 
 	var response models.InventoryResponse
 
-	query := "INSERT INTO Inventories (category_id,product_name,size,stock,price,image) VALUES (?,?,?,?,?,?) RETURNING product_id,stock"
+	query := "INSERT INTO Inventories (category_id,product_name,size,stock,price) VALUES (?,?,?,?,?) RETURNING product_id,stock"
 
-	err := inv.DB.Raw(query, Inventory.CategoryID, Inventory.ProductName, Inventory.Size, Inventory.Stock, Inventory.Price, URL).Scan(&response).Error
+	err := inv.DB.Raw(query, Inventory.CategoryID, Inventory.ProductName, Inventory.Size, Inventory.Stock, Inventory.Price).Scan(&response).Error
 
 	if err != nil {
 		return models.InventoryResponse{}, err
@@ -35,7 +35,7 @@ func (inv *InventoryRepository) AddInventory(Inventory models.AddInventory, URL 
 
 	return response, nil
 }
-
+ 
 func (inv *InventoryRepository) ListProducts() ([]models.Inventories, error) {
 
 	var productDetails []models.Inventories
@@ -111,16 +111,6 @@ func (inv *InventoryRepository) CheckStock(pid int) (int, error) {
 	return stock, nil
 }
 
-func (inv *InventoryRepository) GetProductImages(pid int) (string, error) {
-
-	var image string
-	err := inv.DB.Raw("select image from inventories where product_id =? ", pid).Scan(&image).Error
-	if err != nil {
-		return "", err
-	}
-	return image, nil
-}
-
 func (inv *InventoryRepository) GetCategoryID(pid int) (int, error) {
 	var categoryID int
 	err := inv.DB.Raw("select category_id from inventories where product_id =? ", pid).Scan(&categoryID).Error
@@ -157,7 +147,7 @@ func (i *InventoryRepository) SearchProducts(pdtName string) ([]models.Inventori
 
 	pdtName = strings.TrimSpace(pdtName)
 
-	err := i.DB.Raw("select product_id,category_id,product_name,image,stock,price from inventories where product_name ilike ?", "%"+pdtName+"%").Scan(&products).Error
+	err := i.DB.Raw("select product_id,category_id,product_name,stock,price from inventories where product_name ilike ?", "%"+pdtName+"%").Scan(&products).Error
 	if err != nil {
 		return []models.Inventories{}, err
 	}

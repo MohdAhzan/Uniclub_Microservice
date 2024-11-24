@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"fmt"
-	"mime/multipart"
 
 	"github.com/MohdAhzan/Uniclub_Microservice/INVENTORY_SVC/pkg/helper"
 	"github.com/MohdAhzan/Uniclub_Microservice/INVENTORY_SVC/pkg/pb"
@@ -126,8 +125,8 @@ func (u *InvServiceServer)AddInventory(ctx context.Context, req *pb.AddInventory
     Size: req.Size,
     Stock: int(req.Stock),
     Price: req.Price, 
-  },&multipart.FileHeader{
-    })
+  })
+   
   if err!=nil{
     return nil ,status.Error(codes.Internal,fmt.Sprintf("%v",err))
   }
@@ -156,7 +155,6 @@ func (u *InvServiceServer)GetProductsForAdmin(ctx context.Context, req *pb.GetPr
       ProductId: uint32(data.Product_ID),
       CategoryId: int32(data.CategoryID),
       ProductName: data.ProductName,
-      Image: data.Image,
       Size: data.Size,
       Stock: int32(data.Stock),
       Price: data.Price,
@@ -195,7 +193,6 @@ func (u *InvServiceServer)GetProductsForUsers(ctx context.Context, req *pb.GetPr
       ProductId: uint32(data.Product_ID),
       CategoryId: int32(data.CategoryID),
       ProductName: data.ProductName,
-      Image: data.Image,
       Size: data.Size,
       Stock: int32(data.Stock),
       Price: data.Price,
@@ -258,7 +255,6 @@ func (u *InvServiceServer)SearchProducts(ctx context.Context, req *pb.SearchProd
       ProductId: uint32(data.Product_ID),
       CategoryId: int32(data.CategoryID),
       ProductName: data.ProductName,
-      Image: data.Image,
       Size: data.Size,
       Stock: int32(data.Stock),
       Price: data.Price,

@@ -4,7 +4,7 @@ import "github.com/MohdAhzan/Uniclub_Microservice/INVENTORY_SVC/pkg/utils/models
 
 
 type InventoryRepository interface {
-	AddInventory(Inventory models.AddInventory, URL string) (models.InventoryResponse, error)
+	AddInventory(Inventory models.AddInventory) (models.InventoryResponse, error)
 	CheckCategoryID(CategoryID int) (bool, error)
 	ListProducts() ([]models.Inventories, error)
 	DeleteInventory(pid int) error
@@ -12,7 +12,6 @@ type InventoryRepository interface {
 	CheckProduct(productName string, size string) (bool, error)
 	CheckStock(pid int) (int, error)
 	GetCategoryID(pid int) (int, error)
-	GetProductImages(pid int) (string, error)
 	FindStock(pid int) (int, error)
 	FindPrice(pid int) (float64, error)
 	SearchProducts(pdtName string) ([]models.Inventories, error)
