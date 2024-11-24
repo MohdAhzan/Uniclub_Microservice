@@ -93,14 +93,6 @@ type Address struct {
 	Phone    string
 }
 
-type CheckOut struct {
-	CartID      int
-	Addresses   Address
-	Products    []GetCart
-	TotalPrice  float64
-	Final_Price float64
-}
-
 type AddMoneytoWallet struct {
 	UserID          int
 	Amount          float64
