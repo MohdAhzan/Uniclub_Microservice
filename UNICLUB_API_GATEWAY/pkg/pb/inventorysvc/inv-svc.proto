@@ -1,0 +1,288 @@
+syntax = "proto3";
+
+package inventory;
+
+option go_package = "./pkg/pb/inventorysvc";
+
+service InventoryService {
+  // Category rpcs
+  rpc AddCategory(AddCategoryReq) returns (AddCategoryRes);
+  rpc GetCategories(GetCategoriesReq) returns (GetCategoriesRes);
+  rpc UpdateCategory(UpdateCategoryReq) returns (UpdateCategoryRes);
+  rpc DeleteCategory(DeleteCategoryReq) returns (DeleteCategoryRes);
+
+
+  // Inventory rpcs
+  rpc AddInventory(AddInventoryReq) returns (AddInventoryRes);
+  rpc GetProductsForAdmin(GetProductsForAdminReq) returns (GetProductsForAdminRes);
+  rpc GetProductsForUsers(GetProductsForUsersReq) returns (GetProductsForUsersRes);
+  rpc DeleteInventory(DeleteInventoryReq) returns (DeleteInventoryRes);
+  rpc EditInventory(EditInventoryReq) returns (EditInventoryRes);
+  rpc SearchProducts(SearchProductsReq) returns (SearchProductsRes);
+
+
+  // Offer rpcs
+  rpc AddCategoryOffer(AddCategoryOfferReq) returns (AddCategoryOfferRes);
+  rpc GetAllCategoryOffers(GetAllCategoryOffersReq) returns (GetAllCategoryOffersRes);
+  rpc EditCategoryOffer(EditCategoryOfferReq) returns (EditCategoryOfferRes);
+  rpc ValidorInvalidCategoryOffers(ValidorInvalidCategoryOffersReq) returns (ValidorInvalidCategoryOffersRes);
+
+  rpc AddInventoryOffer(AddInventoryOfferReq) returns (AddInventoryOfferRes);
+  rpc GetInventoryOffers(GetInventoryOffersReq) returns (GetInventoryOffersRes);
+  rpc EditInventoryOffer(EditInventoryOfferReq) returns (EditInventoryOfferRes);
+  rpc ValidorInvalidInventoryOffers(ValidorInvalidInventoryOffersReq) returns (ValidorInvalidInventoryOffersRes);
+
+  // Coupon rpcs
+  rpc CreateNewCoupon(CreateNewCouponReq) returns (CreateNewCouponRes);
+  rpc GetAllCoupons(GetAllCouponsReq) returns (GetAllCouponsRes);
+  rpc MakeCouponInvalid(MakeCouponInvalidReq) returns (MakeCouponInvalidRes);
+  rpc MakeCouponValid(MakeCouponValidReq) returns (MakeCouponValidRes);
+}
+
+// Category messages
+message AddCategoryReq {
+  string category_name = 1;
+}
+
+message AddCategoryRes {
+  Category category = 1;
+  string message = 2;
+}
+
+message GetCategoriesReq {}
+
+message GetCategoriesRes {
+  repeated Category categories = 1;
+}
+
+message UpdateCategoryReq {
+  string current_category_name = 1;
+  string new_category_name = 2;
+}
+
+message UpdateCategoryRes {
+  Category category = 1;
+  string message = 2;
+}
+
+message DeleteCategoryReq {
+  string category_id = 1;
+}
+
+message DeleteCategoryRes {
+  string message = 1;
+}
+
+
+message Category {
+  int32 id = 1;
+  string category_name = 2;
+}
+
+// Offer messaeges
+message AddCategoryOfferReq {
+  int32 category_id = 1;
+  string offer_name = 2;
+  double discount_rate = 3;
+  string valid_till = 4; 
+}
+
+message AddCategoryOfferRes {
+  string message = 1;
+}
+
+message GetAllCategoryOffersReq {}
+
+message GetAllCategoryOffersRes {
+  repeated CategoryOffer category_offers = 1;
+}
+
+message EditCategoryOfferReq {
+  float new_discount = 1;
+  int32 category_id  = 2;
+}
+
+message EditCategoryOfferRes {
+  string message = 1;
+}
+
+message ValidorInvalidCategoryOffersReq {
+  bool status       = 1;
+  int32 category_id = 2;
+}
+
+message ValidorInvalidCategoryOffersRes {
+  string message = 1;
+}
+
+message AddInventoryOfferReq {
+  int32 inventory_id   = 1;
+  string offer_name    = 2;
+  double discount_rate = 3;
+  string valid_till    = 4;
+}
+
+message AddInventoryOfferRes {
+  string message = 1;
+}
+
+message GetInventoryOffersReq {}
+
+message GetInventoryOffersRes {
+  repeated InventoryOffer inventory_offers = 1;
+}
+
+message EditInventoryOfferReq {
+  float new_discount = 1;
+  int32 inventory_id = 2;
+}
+
+message EditInventoryOfferRes {
+  string message = 1;
+}
+
+message ValidorInvalidInventoryOffersReq {
+  bool status = 1;
+  int32 inventory_id = 2;
+}
+
+message ValidorInvalidInventoryOffersRes {
+  string message = 1;
+}
+
+message CategoryOffer {
+  uint32 id = 1;
+  uint32 category_id = 2;
+  string offer_name = 3;
+  double discount_rate = 4;
+  string created_at = 5;
+  string valid_till = 6;
+  bool is_active = 7;
+}
+
+message InventoryOffer {
+  uint32 id = 1;
+  uint32 inventory_id = 2;
+  string product_name = 3;
+  string offer_name = 4;
+  double discount_rate = 5;
+  string created_at = 6;
+  string valid_till = 7;
+  bool is_active = 8;
+}
+
+// Messages for Inventory operations
+
+message Inventory {
+  uint32 product_id = 1;
+  int32 category_id = 2;
+  string product_name = 3;
+  string size = 4;
+  int32 stock = 5;
+  double price = 6;
+  bool if_present_at_wishlist = 7;
+  bool if_present_at_cart = 8;
+  string category_offer = 9;
+  string product_offer = 10;
+  double discounted_price = 11;
+}
+
+
+message AddInventoryReq {
+  uint32 product_id = 1;
+  int32 category_id = 2;
+  string product_name = 3;
+  string size = 4;
+  int32 stock = 5;
+  double price = 6;
+}
+
+message AddInventoryRes {
+  uint32 product_id = 1;
+  string stock = 2;
+}
+
+message GetProductsForAdminReq {}
+
+message GetProductsForAdminRes {
+  repeated Inventory inventories = 1;
+}
+
+message GetProductsForUsersReq {}
+
+message GetProductsForUsersRes {
+  repeated Inventory inventories = 1;
+}
+
+message DeleteInventoryReq {
+  int32 product_id = 1;
+}
+
+message DeleteInventoryRes {
+  string message = 1;
+}
+
+message EditInventoryReq {
+  int32 product_id = 1;
+  int32 category_id = 2;
+  string product_name = 3;
+  string size = 4;
+  int32 stock = 5;
+  double price = 6;
+}
+
+message EditInventoryRes {
+  string message = 1;
+}
+
+message SearchProductsReq {
+  string product_name = 1;
+}
+
+message SearchProductsRes {
+  repeated Inventory inventories = 1;
+}
+
+
+
+// coupon rpc messages
+message CreateNewCouponReq {
+  string coupon_code = 1;
+  int32 discount_rate = 2;
+  string valid_till = 3; 
+}
+
+message CreateNewCouponRes {
+  string message = 1;
+}
+
+message GetAllCouponsReq {}
+
+message GetAllCouponsRes {
+  repeated Coupon coupons = 1;
+}
+
+message MakeCouponInvalidReq {
+  int32 coupon_id = 1;
+}
+
+message MakeCouponInvalidRes {
+  string message = 1;
+}
+
+message MakeCouponValidReq {
+  int32 coupon_id = 1;
+}
+
+message MakeCouponValidRes {
+  string message = 1;
+}
+
+
+message Coupon {
+  string coupon_code = 1;
+  int32 discount_rate = 2;
+  string valid_till = 3;
+}
+
+

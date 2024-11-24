@@ -309,12 +309,12 @@ func (u *usersvcClient) GetAddressess(id int) ([]models.Address, error){
       Phone: address.Phone, 
 
         })
+    ///////////////////////////
     }
 
     return addresses, nil  
 }
 
-///////////////////////////
 
 func (u *usersvcClient) GetWallet(userID int) (models.GetWallet, error){
 

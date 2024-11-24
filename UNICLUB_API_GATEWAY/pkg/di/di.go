@@ -14,9 +14,14 @@ import (
 func InitializeAPI(cfg config.Config)(*server.ServerHTTP,error){
   
   middleware.CfgHelper(cfg)
+
   usersvcClient:=client.NewUserServiceClient(cfg)
   usersvcHandler:=handler.NewUserServiceHandler(usersvcClient)
-  serverHTTP:=server.NewServerHTTP(usersvcHandler)
+
+  inventorysvcClient:=client.NewInventoryServiceClient(cfg)
+  inventorysvcHanlder:=handler.NewInventoryServiceHandler(inventorysvcClient)
+
+  serverHTTP:=server.NewServerHTTP(usersvcHandler,inventorysvcHanlder)
 
     return serverHTTP,nil
 }

@@ -5,62 +5,15 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/MohdAhzan/Uniclub_Microservice/API_GATEWAY/pkg/client/interfaces"
 	response "github.com/MohdAhzan/Uniclub_Microservice/API_GATEWAY/pkg/utils/Response"
 	"github.com/MohdAhzan/Uniclub_Microservice/API_GATEWAY/pkg/utils/models"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
 )
 
-type UserServiceHandler struct{
-  
-  GrpcClient interfaces.UserServiceClient
-
-}
-
-func NewUserServiceHandler (usersvcClient interfaces.UserServiceClient)*UserServiceHandler{
-
-    
-  return &UserServiceHandler{
-    GrpcClient: usersvcClient,
-  }
-
-}
 
 
-func (s *UserServiceHandler)AdminLoginHandler(c *gin.Context){
 
-   	var adminDetails models.AdminLogin
-	if err := c.BindJSON(&adminDetails); err != nil {
-		errRes := response.ClientResponse(http.StatusBadRequest, "details not in the correct format", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-	}
-
-	admin, err := s.GrpcClient.AdminLoginHandler(adminDetails)
-	if err != nil {
-		errRes := response.ClientResponse(http.StatusBadRequest, "cannot authenticate user", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-	}
-	c.Set("Access", admin.AccessToken)
-	// c.Set("Refresh", admin.RefreshToken)
-
-	successRes := response.ClientResponse(http.StatusOK, "Admin authenticated succesfully", admin, nil)
-	c.JSON(http.StatusOK, successRes)
-}
-
-func (s *UserServiceHandler) GetUsers(c *gin.Context) {
-
-	users, err := s.GrpcClient.GetUsers()
-	if err != nil {
-		errRes := response.ClientResponse(http.StatusBadRequest, "couldn't retrieve details", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-	}
-	successRes := response.ClientResponse(http.StatusOK, "successfully retrived the users", users, nil)
-	c.JSON(http.StatusOK, successRes)
-}
 
 func (u *UserServiceHandler) UserSignUp(c *gin.Context) {
 	var user models.UserDetails
@@ -100,6 +53,7 @@ func (u *UserServiceHandler) UserSignUp(c *gin.Context) {
 
 }
 
+
 func (u *UserServiceHandler) UserLoginHandler(c *gin.Context) {
 
 	var user models.UserLogin
@@ -115,7 +69,6 @@ func (u *UserServiceHandler) UserLoginHandler(c *gin.Context) {
 		return
 	}
 
- fmt.Println("hhhksjfdlksdjflksdjlkfsdjlfksdjlfjsakflsajd;lfjs;dlkjf;lasjlf;ksj") 
     
 	user_details, err := u.GrpcClient.UserLoginHandler(user)
 
@@ -130,6 +83,7 @@ func (u *UserServiceHandler) UserLoginHandler(c *gin.Context) {
 
 }
 
+
 func (u *UserServiceHandler) GetUserDetails(c *gin.Context) {
 
 	id, _ := c.Get("id")
@@ -143,6 +97,9 @@ func (u *UserServiceHandler) GetUserDetails(c *gin.Context) {
 	succesRes := response.ClientResponse(http.StatusOK, "successfully fetched Userdetails", userDetails, nil)
 	c.JSON(http.StatusOK, succesRes)
 }
+
+
+
 
 func (u *UserServiceHandler) EditUserDetails(c *gin.Context) {
 
@@ -303,101 +260,3 @@ func (u *UserServiceHandler) DeleteAddress(c *gin.Context) {
 	c.JSON(http.StatusOK, successRes)
 
 }
-
-// func (u *UserServiceHandler)ChangeUserPassword (c *gin.Context) {
-//
-// 	id, _ := c.Get("id")
-// 	userID := id.(int)
-//
-// 	var changePass models.ChangePassword
-//
-// 	err := c.BindJSON(&changePass)
-// 	if err != nil {
-// 		errRes := response.ClientResponse(http.StatusBadRequest, "Error binding json", nil, err.Error())
-// 		c.JSON(http.StatusBadRequest, errRes)
-// 		return
-// 	}
-//
-// 	err = u.GrpcClient.(userID, changePass)
-// 	if err != nil {
-// 		errRes := response.ClientResponse(http.StatusBadRequest, "Error changing Password", nil, err.Error())
-// 		c.JSON(http.StatusBadRequest, errRes)
-// 		return
-// 	}
-//
-// 	successRes := response.ClientResponse(http.StatusOK, "Successfully changed Password", nil, nil)
-// 	c.JSON(http.StatusOK, successRes)
-//
-// }
-func (ad *UserServiceHandler) BlockUser(c *gin.Context) {
-	id := c.Query("id")
-	userID, err := strconv.Atoi(id)
-	if err != nil {
-		response.ClientResponse(http.StatusBadRequest, "error string conversion", nil, err.Error())
-	}
-	err = ad.GrpcClient.BlockUser(userID)
-
-	if err != nil {
-		errRes := response.ClientResponse(http.StatusBadRequest, "couldn't block user", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-
-	}
-
-	successRes := response.ClientResponse(http.StatusOK, "successfully blocked the user ", nil, nil)
-	c.JSON(http.StatusOK, successRes)
-}
-
-func (ad *UserServiceHandler) UnBlockUser(c *gin.Context) {
-	id := c.Query("id")
-	userID, err := strconv.Atoi(id)
-	if err != nil {
-		response.ClientResponse(http.StatusBadRequest, "error string conversion", nil, err.Error())
-	}
-	err = ad.GrpcClient.UnBlockUser(userID)
-	if err != nil {
-		errRes := response.ClientResponse(http.StatusBadRequest, "couldn't block user", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-	}
-	successRess := response.ClientResponse(http.StatusOK, "successfully unblocked the user", nil, nil)
-	c.JSON(http.StatusOK, successRess)
-
-}
-
-
-func (ad *UserServiceHandler) ChangeAdminPassword(c *gin.Context) {
-
-	var adminPassChange models.AdminPasswordChange
-
-	if err := c.BindJSON(&adminPassChange); err != nil {
-
-		errRes := response.ClientResponse(http.StatusBadRequest, "error BindingJson Invalid Format", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-
-		return
-	}
-	id, exist := c.Get("id")
-	fmt.Println("LOGG ADMIN JWT ID", id)
-
-	if !exist {
-
-		errRes := response.ClientResponse(http.StatusBadRequest, "error getting admin Id", nil, fmt.Errorf("No admin id exist"))
-		c.JSON(http.StatusInternalServerError, errRes)
-		return
-	}
-
-	err := ad.GrpcClient.ChangeAdminPassword(adminPassChange, id.(int))
-	if err != nil {
-
-		errRes := response.ClientResponse(http.StatusBadRequest, "Error changing your password", nil, err.Error())
-		c.JSON(http.StatusBadRequest, errRes)
-		return
-
-	}
-
-	successRes := response.ClientResponse(http.StatusOK, "successfully changed your password", nil, nil)
-	c.JSON(http.StatusOK, successRes)
-
-}
-

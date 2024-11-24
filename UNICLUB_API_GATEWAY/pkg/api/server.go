@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/MohdAhzan/Uniclub_Microservice/API_GATEWAY/pkg/api/handler"
@@ -13,7 +12,7 @@ type ServerHTTP struct {
   engine *gin.Engine
 }
 
-func NewServerHTTP(usersvcHandler *handler.UserServiceHandler) *ServerHTTP {
+func NewServerHTTP(usersvcHandler *handler.UserServiceHandler, inventorysvcHandler *handler.InventoryServiceHandler) *ServerHTTP {
 
 
   router := gin.New()
@@ -28,14 +27,48 @@ func NewServerHTTP(usersvcHandler *handler.UserServiceHandler) *ServerHTTP {
   router.Use(middleware.AdminAuthMiddleware)
   {
 
-    router.PUT("/change_password", usersvcHandler.ChangeAdminPassword)
 
-    userManagement := router.Group("admin/users")
+    admin:=router.Group("/admin")
     {
-      userManagement.GET("", usersvcHandler.GetUsers)
-      userManagement.PUT("/block", usersvcHandler.BlockUser)
-      userManagement.PUT("/unblock", usersvcHandler.UnBlockUser)
+      router.PUT("/change_password", usersvcHandler.ChangeAdminPassword)
+
+      userManagement := admin.Group("/users")
+      {
+        userManagement.GET("", usersvcHandler.GetUsers)
+        userManagement.PUT("/block", usersvcHandler.BlockUser)
+        userManagement.PUT("/unblock", usersvcHandler.UnBlockUser)
+      }
+      categorymanagement := admin.Group("/category")
+      {
+        categorymanagement.GET("", inventorysvcHandler.GetCategory)
+        categorymanagement.POST("", inventorysvcHandler.AddCategory)
+        categorymanagement.PUT("", inventorysvcHandler.UpdateCategory)
+        categorymanagement.DELETE("", inventorysvcHandler.DeleteCategory)
+
+      }
+
+      productmanagement := admin.Group("/products")
+      {
+        productmanagement.POST("", inventorysvcHandler.AddInventory)
+        productmanagement.GET("", inventorysvcHandler.GetProductsForAdmin)
+        productmanagement.DELETE("", inventorysvcHandler.DeleteInventory)
+        productmanagement.PUT("/:id/edit_details", inventorysvcHandler.EditInventoryDetails)
+      }
+
+      offerManagment := admin.Group("/offers")
+      {
+        offerManagment.POST("/category", inventorysvcHandler.AddCategoryOffer)
+        offerManagment.GET("/category", inventorysvcHandler.GetAllCategoryOffers)
+        offerManagment.PUT("/category", inventorysvcHandler.EditCategoryOffer)
+        offerManagment.DELETE("/category", inventorysvcHandler.ValidorInvalidCategoryOffers)
+
+        offerManagment.POST("/product", inventorysvcHandler.AddInventoryOffer)
+        offerManagment.GET("/product", inventorysvcHandler.GetInventoryOffers)
+        offerManagment.PUT("/product", inventorysvcHandler.EditInventoryOffer)
+        offerManagment.DELETE("/product", inventorysvcHandler.ValidorInvalidInventoryOffers)
+      }
     }
+
   }
 
   // CLIENT ROUTES 
@@ -46,18 +79,24 @@ func NewServerHTTP(usersvcHandler *handler.UserServiceHandler) *ServerHTTP {
   router.Use(middleware.UserAuthMiddleware)
   {
 
-    profile := router.Group("/profile")
+    user:=router.Group("/user")
     {
-      profile.GET("/details", usersvcHandler.GetUserDetails)
-      profile.GET("/address", usersvcHandler.GetAddressess)
-      profile.POST("/address", usersvcHandler.AddAddressess)
-      profile.DELETE("/address", usersvcHandler.DeleteAddress)
-      edit := profile.Group("/edit")
+
+      profile := user.Group("/profile")
       {
-        edit.PUT("/account", usersvcHandler.EditUserDetails)
-        edit.PUT("/address", usersvcHandler.EditAddress)
+        profile.GET("/details", usersvcHandler.GetUserDetails)
+        profile.GET("/address", usersvcHandler.GetAddressess)
+        profile.POST("/address", usersvcHandler.AddAddressess)
+        profile.DELETE("/address", usersvcHandler.DeleteAddress)
+        edit := profile.Group("/edit")
+        {
+          edit.PUT("/account", usersvcHandler.EditUserDetails)
+          edit.PUT("/address", usersvcHandler.EditAddress)
+        }
       }
+
     }
+
   }
   return &ServerHTTP{engine: router}
 }
@@ -67,7 +106,6 @@ func (s *ServerHTTP) Start() {
   log.Printf("starting server on 7000")
   err := s.engine.Run(":7000")
   if err != nil {
-    fmt.Println("asldkjf;lksdjflsldjfljsad;lkfjlsdjflj",err)
-    log.Printf("error while starting the server")
+    log.Printf("error while starting the server \n %v \n",err)
   }
 }
