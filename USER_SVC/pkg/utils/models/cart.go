@@ -13,7 +13,6 @@ type CartResponse struct {
 type GetCart struct {
 	ProductID       int     `json:"product_id"`
 	ProductName     string  `json:"product_name"`
-	Image           string  `json:"image"`
 	Category_id     int     `json:"category_id"`
 	Quantity        int     `json:"quantity"`
 	StockAvailable  int     `json:"stock_available"`
